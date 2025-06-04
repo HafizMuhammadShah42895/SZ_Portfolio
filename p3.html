@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio - Your Sister's Name</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'soft-pink': '#f9e4e7',
+            'muted-indigo': '#4c51bf',
+            'soft-lavender': '#c3bef0',
+            'dark-navy': '#1a202c',
+            'dark-indigo': '#2c3e50',
+            'soft-cream': '#fffaf0',
+            'soft-gray': '#f4f4f5',
+            'dark-gray': '#2d3748',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Slide in left and right base */
+    .slide-in-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 1s ease;
+    }
+    .slide-in-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 1s ease;
+    }
+    .show {
+      opacity: 1 !important;
+      transform: translateX(0) !important;
+    }
+    /* ZoomIn animation */
+    .zoomIn {
+      animation: zoomIn 1s ease forwards;
+      animation-play-state: paused;
+    }
+    /* SlideInUp animation */
+    .slideInUp {
+      animation: slideInUp 1s ease 0.3s forwards;
+      animation-play-state: paused;
+    }
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    @keyframes slideInUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    /* Typewriter style */
+    #typewriter {
+      display: inline-block;
+      border-right: 2px solid currentColor;
+      white-space: nowrap;
+      overflow: hidden;
+      vertical-align: bottom;
+      font-style: italic;
+      font-size: 1.125rem;
+      min-height: 1.5em;
+      letter-spacing: 0.05em;
+    }
+    /* -- MOBILE MENU FADE ANIMATION -- */
+    #mobile-menu {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    #mobile-menu.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    /* -- DARK MODE COLOR ADJUSTMENTS FOR CONTACT -- */
+    @media (prefers-color-scheme: dark) {
+      #contact {
+        background-color: #1f2937 !important;
+        color: #e0e7ff !important;
+      }
+      #contact a {
+        color: #a5b4fc !important;
+      }
+      #contact a:hover {
+        color: #818cf8 !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-soft-cream dark:bg-dark-navy text-dark-navy dark:text-soft-cream transition-colors duration-700">
+<!-- Navbar -->
+<nav
+  class="fixed top-0 w-full z-50 bg-soft-cream dark:bg-dark-indigo shadow-md transition-colors duration-700"
+>
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-dark-navy dark:text-soft-cream">Portfolio</h1>
+
+    <!-- Hamburger button for mobile -->
+    <button
+      id="menu-btn"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+      class="md:hidden text-dark-navy dark:text-soft-cream focus:outline-none focus:ring-2 focus:ring-indigo-500"
+    >
+      <svg
+        class="w-8 h-8"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Desktop icon navbar (hidden on mobile) -->
+    <ul
+      id="desktop-menu"
+      class="hidden md:flex md:space-x-8 items-center text-dark-navy dark:text-soft-cream"
+    >
+      <li>
+        <a href="#home" aria-label="Home" title="Home" class="p-2 rounded hover:bg-muted-indigo/20 dark:hover:bg-soft-lavender/30 transition">
+          <i class="fas fa-house fa-lg"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#about" aria-label="About" title="About" class="p-2 rounded hover:bg-muted-indigo/20 dark:hover:bg-soft-lavender/30 transition">
+          <i class="fas fa-user fa-lg"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#skills" aria-label="Skills" title="Skills" class="p-2 rounded hover:bg-muted-indigo/20 dark:hover:bg-soft-lavender/30 transition">
+          <i class="fas fa-lightbulb fa-lg"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#education" aria-label="Education" title="Education" class="p-2 rounded hover:bg-muted-indigo/20 dark:hover:bg-soft-lavender/30 transition">
+          <i class="fas fa-graduation-cap fa-lg"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#experience" aria-label="Experience" title="Experience" class="p-2 rounded hover:bg-muted-indigo/20 dark:hover:bg-soft-lavender/30 transition">
+          <i class="fas fa-briefcase fa-lg"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#contact" aria-label="Contact" title="Contact" class="p-2 rounded hover:bg-muted-indigo/20 dark:hover:bg-soft-lavender/30 transition">
+          <i class="fas fa-envelope fa-lg"></i>
+        </a>
+      </li>
+
+      <!-- Resume Download Button on Desktop -->
+      <li>
+        <a href="resume.pdf" class="resume-link ml-6 px-4 py-2 bg-muted-indigo text-soft-cream rounded hover:bg-muted-indigo/80 transition" aria-label="Download Resume" title="Download Resume">
+          <i class="fas fa-file-download mr-2"></i> Resume
+        </a>
+      </li>
+
+      <li>
+        <button
+          onclick="toggleDarkMode()"
+          aria-label="Toggle Dark Mode"
+          title="Toggle Dark Mode"
+          class="ml-6 p-2 border rounded text-muted-indigo dark:text-soft-lavender hover:bg-soft-pink dark:hover:bg-dark-indigo transition"
+        >
+          🌓
+        </button>
+      </li>
+    </ul>
+
+    <!-- Mobile text menu (hidden by default) -->
+    <div
+      id="mobile-menu"
+      class="fixed top-0 left-0 w-full h-full bg-soft-cream dark:bg-dark-indigo text-dark-navy dark:text-soft-cream flex flex-col items-center justify-center space-y-8 text-2xl font-semibold z-50"
+    >
+      <a href="#home" class="hover:text-muted-indigo dark:hover:text-soft-lavender" onclick="closeMobileMenu()">Home</a>
+      <a href="#about" class="hover:text-muted-indigo dark:hover:text-soft-lavender" onclick="closeMobileMenu()">About</a>
+      <a href="#skills" class="hover:text-muted-indigo dark:hover:text-soft-lavender" onclick="closeMobileMenu()">Skills</a>
+      <a href="#education" class="hover:text-muted-indigo dark:hover:text-soft-lavender" onclick="closeMobileMenu()">Education</a>
+      <a href="#experience" class="hover:text-muted-indigo dark:hover:text-soft-lavender" onclick="closeMobileMenu()">Experience</a>
+      <a href="#contact" class="hover:text-muted-indigo dark:hover:text-soft-lavender" onclick="closeMobileMenu()">Contact</a>
+
+      <!-- Resume Download Button on Mobile -->
+      <a href="resume.pdf" class="resume-link mt-6 px-6 py-3 bg-muted-indigo text-soft-cream rounded hover:bg-muted-indigo/80 transition" aria-label="Download Resume" title="Download Resume">
+        Download Resume
+      </a>
+
+      <!-- Dark mode toggle as text button on mobile -->
+      <button
+        onclick="toggleDarkMode()"
+        class="mt-6 px-6 py-2 border rounded text-muted-indigo dark:text-soft-lavender hover:bg-soft-pink dark:hover:bg-dark-indigo transition"
+        aria-label="Toggle Dark Mode"
+        title="Toggle Dark Mode"
+      >
+        Toggle Dark Mode 🌓
+      </button>
+
+      <button
+        onclick="closeMobileMenu()"
+        aria-label="Close menu"
+        class="absolute top-6 right-6 text-3xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      >
+        &times;
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main class="pt-24 space-y-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Home -->
+  <section
+    id="home"
+    class="flex flex-col items-center justify-center text-center py-20 max-w-3xl mx-auto"
+  >
+    <img
+      src="pic.png"
+      alt="Photo of Your Sister's Name"
+      class="w-32 h-32 rounded-full border-4 border-muted-indigo mb-6 transition-colors duration-700"
+      loading="lazy"
+    />
+    <h2 class="text-4xl font-bold zoomIn text-dark-navy dark:text-soft-cream transition-colors duration-700">Your Sister's Name</h2>
+    <p class="mt-2 text-lg italic slideInUp text-muted-indigo dark:text-soft-lavender transition-colors duration-700">
+      <span id="typewriter"></span>
+    </p>
+  </section>
+
+  <!-- Decorative Divider -->
+  <div class="w-full h-8 bg-gradient-to-r from-soft-pink via-soft-pink to-soft-pink dark:from-dark-indigo dark:via-dark-indigo dark:to-dark-indigo transition-colors duration-700"></div>
+
+  <!-- About -->
+  <section
+    id="about"
+    class="px-10 py-16 flex flex-col justify-center max-w-4xl mx-auto bg-soft-pink dark:bg-dark-indigo rounded-lg shadow-lg transition-colors duration-700"
+  >
+    <h2 class="text-3xl font-semibold mb-4 text-muted-indigo dark:text-soft-lavender slide-in-left">
+      About Me
+    </h2>
+    <p class="text-lg slide-in-right text-dark-navy dark:text-soft-cream">
+      I am a passionate freelancer with years of experience in web design and
+      development. I help clients build attractive, functional, and modern
+      websites that get results.
+    </p>
+  </section>
+
+  <!-- Decorative Divider -->
+  <div class="w-full h-6 bg-gradient-to-r from-soft-cream to-soft-pink dark:from-dark-indigo dark:to-dark-navy transition-colors duration-700"></div>
+
+  <!-- Skills -->
+  <section
+    id="skills"
+    class="px-10 py-16 flex flex-col justify-center bg-soft-cream dark:bg-dark-navy max-w-5xl mx-auto relative rounded-lg shadow-lg transition-colors duration-700"
+  >
+    <h2 class="text-3xl font-semibold mb-8 text-muted-indigo dark:text-soft-lavender slide-in-left">
+      Skills
+    </h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+      <span
+        class="bg-soft-pink dark:bg-dark-indigo text-muted-indigo dark:text-soft-lavender px-4 py-2 rounded slide-in-right transition-colors duration-700"
+        >Web Design</span
+      >
+      <span
+        class="bg-soft-pink dark:bg-dark-indigo text-muted-indigo dark:text-soft-lavender px-4 py-2 rounded slide-in-left transition-colors duration-700"
+        >Figma</span
+      >
+      <span
+        class="bg-soft-pink dark:bg-dark-indigo text-muted-indigo dark:text-soft-lavender px-4 py-2 rounded slide-in-right transition-colors duration-700"
+        >WordPress</span
+      >
+      <span
+        class="bg-soft-pink dark:bg-dark-indigo text-muted-indigo dark:text-soft-lavender px-4 py-2 rounded slide-in-left transition-colors duration-700"
+        >HTML/CSS/JS</span
+      >
+      <span
+        class="bg-soft-pink dark:bg-dark-indigo text-muted-indigo dark:text-soft-lavender px-4 py-2 rounded slide-in-right transition-colors duration-700"
+        >React</span
+      >
+      <span
+        class="bg-soft-pink dark:bg-dark-indigo text-muted-indigo dark:text-soft-lavender px-4 py-2 rounded slide-in-left transition-colors duration-700"
+        >SEO</span
+      >
+    </div>
+    <div class="absolute bottom-0 left-0 w-48 h-48 bg-soft-pink rounded-full opacity-30 dark:bg-dark-indigo -z-10 transition-colors duration-700"></div>
+  </section>
+
+  <!-- Decorative Divider -->
+  <div class="w-full h-6 bg-gradient-to-r from-soft-pink to-soft-cream dark:from-dark-indigo dark:to-dark-navy transition-colors duration-700"></div>
+
+  <!-- Education -->
+  <section
+    id="education"
+    class="px-10 py-16 flex flex-col justify-center max-w-4xl mx-auto bg-soft-pink dark:bg-dark-indigo rounded-lg shadow-lg transition-colors duration-700"
+  >
+    <h2 class="text-3xl font-semibold mb-4 text-muted-indigo dark:text-soft-lavender slide-in-left">
+      Education
+    </h2>
+    <p class="text-lg slide-in-right text-dark-navy dark:text-soft-cream">
+      Bachelor's Degree in Computer Science - XYZ University
+    </p>
+  </section>
+
+  <!-- Decorative Divider -->
+  <div class="w-full h-6 bg-gradient-to-r from-soft-cream to-soft-pink dark:from-dark-navy dark:to-dark-indigo transition-colors duration-700"></div>
+
+  <!-- Experience -->
+  <section
+    id="experience"
+    class="px-10 py-16 flex flex-col justify-center max-w-4xl mx-auto bg-soft-cream dark:bg-dark-navy rounded-lg shadow-lg transition-colors duration-700"
+  >
+    <h2 class="text-3xl font-semibold mb-4 text-muted-indigo dark:text-soft-lavender slide-in-left">
+      Experience
+    </h2>
+    <ul class="list-disc pl-6 space-y-3 slide-in-right text-dark-navy dark:text-soft-cream">
+      <li>3+ years on Upwork and Fiverr with 100+ projects delivered</li>
+      <li>UI/UX and responsive design expert</li>
+      <li>Worked with international clients across 10+ countries</li>
+    </ul>
+  </section>
+
+  <!-- Decorative Divider -->
+  <div class="w-full h-6 bg-gradient-to-r from-soft-pink to-soft-cream dark:from-dark-indigo dark:to-dark-navy transition-colors duration-700"></div>
+
+  <!-- Contact -->
+  <section
+    id="contact"
+    class="px-10 py-20 flex flex-col justify-center text-center max-w-4xl mx-auto bg-soft-pink dark:bg-dark-indigo rounded-lg shadow-lg transition-colors duration-700"
+  >
+    <h2 class="text-3xl font-semibold mb-8 text-muted-indigo dark:text-soft-lavender slide-in-left">
+      Contact Me
+    </h2>
+    <p class="text-lg mb-8 slide-in-right text-dark-navy dark:text-soft-cream">
+      Click on the icons below to reach out to me:
+    </p>
+    <div class="flex justify-center space-x-12 text-5xl">
+      <a
+        href="mailto:your@email.com"
+        class="text-muted-indigo dark:text-soft-lavender hover:text-muted-indigo/70 dark:hover:text-soft-lavender/70 slide-in-left transition-colors duration-300"
+        ><i class="fas fa-envelope"></i
+      ></a>
+      <a
+        href="https://linkedin.com/in/yourprofile"
+        target="_blank"
+        class="text-muted-indigo dark:text-soft-lavender hover:text-muted-indigo/70 dark:hover:text-soft-lavender/70 slide-in-right transition-colors duration-300"
+        ><i class="fab fa-linkedin"></i
+      ></a>
+      <a
+        href="https://wa.me/yourwhatsapplink"
+        target="_blank"
+        class="text-muted-indigo dark:text-soft-lavender hover:text-muted-indigo/70 dark:hover:text-soft-lavender/70 slide-in-left transition-colors duration-300"
+        ><i class="fab fa-whatsapp"></i
+      ></a>
+    </div>
+
+    <!-- Resume Download Button on Desktop (below icons) -->
+    <a href="resume.pdf" class="resume-link mt-12 inline-block px-8 py-3 bg-muted-indigo text-soft-cream rounded hover:bg-muted-indigo/80 transition" aria-label="Download Resume" title="Download Resume">
+      <i class="fas fa-file-download mr-3"></i> Download Resume
+    </a>
+  </section>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Elements
+  const btn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  // Mobile hamburger toggle with fade animation
+  btn.addEventListener('click', () => {
+    const isShown = mobileMenu.classList.contains('show');
+
+    if (isShown) {
+      mobileMenu.classList.remove('show');
+      btn.setAttribute('aria-expanded', 'false');
+    } else {
+      mobileMenu.classList.add('show');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  // Close mobile menu helper (called from HTML onclick)
+  window.closeMobileMenu = function() {
+    mobileMenu.classList.remove('show');
+    btn.setAttribute('aria-expanded', 'false');
+  };
+
+  // IntersectionObserver for animations
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const target = entry.target;
+
+        if (entry.isIntersecting) {
+          if (target.classList.contains('slide-in-left') || target.classList.contains('slide-in-right')) {
+            target.classList.add('show');
+          }
+          if (target.classList.contains('zoomIn') || target.classList.contains('slideInUp')) {
+            target.style.animationPlayState = 'running';
+          }
+        } else {
+          if (target.classList.contains('slide-in-left') || target.classList.contains('slide-in-right')) {
+            target.classList.remove('show');
+          }
+          if (target.classList.contains('zoomIn') || target.classList.contains('slideInUp')) {
+            target.style.animationPlayState = 'paused';
+            target.style.animation = 'none';
+            target.offsetHeight; // trigger reflow
+            target.style.animation = null;
+          }
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  document.querySelectorAll('.slide-in-left, .slide-in-right, .zoomIn, .slideInUp').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Dark mode toggle (called from HTML onclick)
+  window.toggleDarkMode = function() {
+    document.documentElement.classList.toggle('dark');
+  };
+
+  // Auto-enable dark mode if user prefers it
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.documentElement.classList.add('dark');
+  }
+
+  // Typewriter effect for home section text
+  const phrases = [
+    "Creative Freelancer",
+    "Upwork & Fiverr Expert"
+  ];
+
+  const typewriterEl = document.getElementById('typewriter');
+  let phraseIndex = 0;
+  let letterIndex = 0;
+  let typing = true;
+  let timeoutId;
+
+  function type() {
+    const currentPhrase = phrases[phraseIndex];
+    if (typing) {
+      if (letterIndex <= currentPhrase.length) {
+        typewriterEl.textContent = currentPhrase.slice(0, letterIndex);
+        letterIndex++;
+        timeoutId = setTimeout(type, 150);
+      } else {
+        typing = false;
+        timeoutId = setTimeout(type, 1000);
+      }
+    } else {
+      if (letterIndex >= 0) {
+        typewriterEl.textContent = currentPhrase.slice(0, letterIndex);
+        letterIndex--;
+        timeoutId = setTimeout(type, 100);
+      } else {
+        typing = true;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        timeoutId = setTimeout(type, 500);
+      }
+    }
+  }
+
+  let typingStarted = false;
+  const homeSection = document.getElementById('home');
+  const homeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !typingStarted) {
+        typingStarted = true;
+        type();
+      } else if (!entry.isIntersecting) {
+        typingStarted = false;
+        clearTimeout(timeoutId);
+        typewriterEl.textContent = '';
+        letterIndex = 0;
+        typing = true;
+        phraseIndex = 0;
+      }
+    });
+  }, { threshold: 0.5 });
+
+  homeObserver.observe(homeSection);
+
+  // Resume link behavior for mobile vs desktop
+  function isMobile() {
+    return /Mobi|Android/i.test(navigator.userAgent);
+  }
+
+  document.querySelectorAll('.resume-link').forEach(link => {
+    if (isMobile()) {
+      // On mobile, remove download and open in new tab
+      link.removeAttribute('download');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    } else {
+      // On desktop, enable download attribute and remove target
+      link.setAttribute('download', '');
+      link.removeAttribute('target');
+      link.removeAttribute('rel');
+    }
+  });
+});
+</script>
+</body>
+</html>
